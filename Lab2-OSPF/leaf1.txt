@@ -1,0 +1,63 @@
+leaf1#show running-config 
+! Command: show running-config
+! device: leaf1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname leaf1
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description leaf1-spine1
+   no switchport
+   ip address 10.2.1.10/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+!
+interface Ethernet2
+   description leaf1-spine2
+   no switchport
+   ip address 10.2.1.12/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.1/32
+   ip ospf area 0.0.0.1
+!
+interface Management1
+!
+ip routing
+!
+router ospf 1
+   router-id 10.0.1.1
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+leaf1#

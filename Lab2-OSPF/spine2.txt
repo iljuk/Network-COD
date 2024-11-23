@@ -1,0 +1,67 @@
+spine2#show running-config 
+! Command: show running-config
+! device: spine2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname spine2
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description spine2-leaf1
+   no switchport
+   ip address 10.2.1.13/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+!
+interface Ethernet2
+   description spine2-leaf2
+   no switchport
+   ip address 10.2.1.23/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+!
+interface Ethernet3
+   description spine2-leaf3
+   no switchport
+   ip address 10.2.1.33/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.102/32
+   ip ospf area 0.0.0.1
+!
+interface Management1
+!
+ip routing
+!
+router ospf 1
+   router-id 10.0.1.102
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+spine2#
