@@ -6,7 +6,7 @@ IP план:
 10.3.0.0/16 - Reserv
 10.7.0.0/14 - for Clients Services
 
-Распределение IPP:
+Распределение IP:
 
 Loopback1 Underlay:
 10.0.1.1 leaf1
