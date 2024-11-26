@@ -1,0 +1,25 @@
+leaf1#show bfd peers 
+VRF name: default
+-----------------
+DstAddr       MyDisc    YourDisc  Interface/Transport    Type           LastUp 
+---------- ---------- ----------- -------------------- ------- ----------------
+10.2.1.11  788910598  2903005639        Ethernet1(14)  normal   11/26/24 15:48 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+
+leaf1#
+
+spine1#show bfd peers 
+VRF name: default
+-----------------
+DstAddr        MyDisc   YourDisc  Interface/Transport    Type           LastUp 
+---------- ----------- ---------- -------------------- ------- ----------------
+10.2.1.10  2903005639  788910598        Ethernet1(14)  normal   11/26/24 15:48 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+
+spine1#
