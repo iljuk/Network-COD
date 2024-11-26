@@ -1,1 +1,48 @@
+IP plan OSPF migration -> IS-IS:
+
+10.0.1.0/32 - Loopback1 (Underlay)
+10.1.1.0/32 - Loopback2
+10.2.1.0/31 - p2p Links (Underlay)
+10.3.0.0/16 - Reserv
+10.7.0.0/14 - for Clients Services
+
+IS-IS Net for COD1:
+49.0001.1000.1000.0xxx.00
+
+IP:
+
+IS-IS Id - Loopback1 IP Underlay:
+1000.0000.1001 - 10.0.1.1 leaf1 
+1000.0000.1002 - 10.0.1.2 leaf2
+1000.0000.1003 - 10.0.1.3 leaf3
+1000.0000.1101 - 10.0.1.101 spine1
+1000.0000.1102 - 10.0.1.102 spine2
+
+Net Id                    
+49.0001.1000.0000.1001.00       leaf1   
+49.0001.1000.0000.1002.00       leaf2   
+49.0001.1000.0000.1003.00       leaf3   
+49.0001.1000.0000.1101.00       spine1
+49.0001.1000.0000.1102.00       spine2
+                    
+
+p2p Underlay Links:
+leaf1 10.2.1.10/31 - spine1 10.2.1.11/31 
+leaf1 10.2.1.12/31 - spine2 10.2.1.13/31 
+
+leaf2 10.2.1.20/31 - spine1 10.2.1.21/31 
+leaf2 10.2.1.22/31 - spine2 10.2.1.23/31 
+
+leaf3 10.2.1.30/31 - spine1 10.2.1.31/31 
+leaf3 10.2.1.32/31 - spine2 10.2.1.33/31 
+
+Loopback2 (reserv):
+10.1.1.1 leaf1
+10.1.1.2 leaf2
+10.1.1.3 leaf3
+10.1.1.101 spine1
+10.1.1.102 spine2
+
+
+Config ES:
 
