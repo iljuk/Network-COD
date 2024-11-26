@@ -1,4 +1,5 @@
 IP Plan + Config + show isis (all in 1)
+<img width="536" alt="shema-seti" src="https://github.com/user-attachments/assets/29013b4e-af3f-437c-87dc-d2400f82456c">
 
 ##########################################################################################
 
