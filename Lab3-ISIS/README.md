@@ -42,7 +42,3 @@ Loopback2 (reserv):
 10.1.1.3 leaf3
 10.1.1.101 spine1
 10.1.1.102 spine2
-
-
-Config ES:
-
