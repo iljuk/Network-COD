@@ -992,5 +992,31 @@ PING 10.0.1.102 (10.0.1.102) from 10.0.1.102 : 72(100) bytes of data.
 rtt min/avg/max/mdev = 0.263/0.693/1.624/0.523 ms, ipg/ewma 8.094/1.139 ms
 spine2#
 
+********************************************************************************
 
+leaf1#show bfd peers 
+VRF name: default
+-----------------
+DstAddr       MyDisc    YourDisc  Interface/Transport    Type           LastUp 
+---------- ---------- ----------- -------------------- ------- ----------------
+10.2.1.11  788910598  2903005639        Ethernet1(14)  normal   11/26/24 15:48 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+
+leaf1#
+
+spine1#show bfd peers 
+VRF name: default
+-----------------
+DstAddr        MyDisc   YourDisc  Interface/Transport    Type           LastUp 
+---------- ----------- ---------- -------------------- ------- ----------------
+10.2.1.10  2903005639  788910598        Ethernet1(14)  normal   11/26/24 15:48 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+
+spine1#
 
