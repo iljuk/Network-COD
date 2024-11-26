@@ -1,3 +1,6 @@
+IP Plan + Config + show isis (all in 1)
+
+
 IP plan OSPF migration -> IS-IS:
 
 10.0.1.0/32 - Loopback1 (Underlay)
