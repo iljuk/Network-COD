@@ -1,0 +1,82 @@
+leaf2#show running-config
+! Command: show running-config
+! device: leaf2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname leaf2
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description leaf2-spine1
+   no switchport
+   ip address 10.2.1.20/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description leaf2-spine2
+   no switchport
+   ip address 10.2.1.22/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.1
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.2/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   net 49.0001.1000.0000.1002.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.2
+   shutdown
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+leaf2#
