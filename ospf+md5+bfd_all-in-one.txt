@@ -1,0 +1,961 @@
+IP План:
+
+10.0.1.0/32 - Loopback1 (Underlay)
+10.1.1.0/32 - Loopback2
+10.2.1.0/31 - p2p Links (Underlay(
+10.3.0.0/16 - Reserv
+10.7.0.0/14 - for Clients Services
+
+Распределение IP:
+
+Loopback1 Underlay:
+10.0.1.1 leaf1
+10.0.1.2 leaf2
+10.0.1.3 leaf3
+10.0.1.101 spine1
+10.0.1.102 spine2
+
+p2p Underlay Links:
+leaf1 10.2.1.10/31 - spine1 10.2.1.11/31 
+leaf1 10.2.1.12/31 - spine2 10.2.1.13/31 
+
+leaf2 10.2.1.20/31 - spine1 10.2.1.21/31 
+leaf2 10.2.1.22/31 - spine2 10.2.1.23/31 
+
+leaf3 10.2.1.30/31 - spine1 10.2.1.31/31 
+leaf3 10.2.1.32/31 - spine2 10.2.1.33/31 
+
+
+###############################################################################################
+
+leaf1#show running-config 
+! Command: show running-config
+! device: leaf1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname leaf1
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description leaf1-spine1
+   no switchport
+   ip address 10.2.1.10/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 l0w89E/+c20=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description leaf1-spine2
+   no switchport
+   ip address 10.2.1.12/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.1/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   shutdown
+   net 49.0001.1000.0000.1001.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.1
+   bfd default
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+leaf1#
+
+
+
+leaf2#show running-config 
+! Command: show running-config
+! device: leaf2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+container-manager
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname leaf2
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description leaf2-spine1
+   no switchport
+   ip address 10.2.1.20/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 l0w89E/+c20=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description leaf2-spine2
+   no switchport
+   ip address 10.2.1.22/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.2/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   shutdown
+   net 49.0001.1000.0000.1002.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.2
+   bfd default
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+leaf2#
+
+
+leaf3#show running-config 
+! Command: show running-config
+! device: leaf3 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname leaf3
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description leaf3-spine1
+   no switchport
+   ip address 10.2.1.30/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 l0w89E/+c20=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description leaf3-spine2
+   no switchport
+   ip address 10.2.1.32/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   shutdown
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.3/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   shutdown
+   net 49.0001.1000.0000.1003.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.3
+   bfd default
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+leaf3#
+
+
+
+spine1#show running-config 
+! Command: show running-config
+! device: spine1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname spine1
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description spine1-leaf1
+   no switchport
+   ip address 10.2.1.11/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 l0w89E/+c20=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description spine1-leaf2
+   no switchport
+   ip address 10.2.1.21/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   description spine1-leaf3
+   no switchport
+   ip address 10.2.1.31/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.101/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   shutdown
+   net 49.0001.1000.0000.1101.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.101
+   bfd default
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+spine1#
+
+
+
+spine2#show running-config 
+! Command: show running-config
+! device: spine2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname spine2
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description spine2-leaf1
+   no switchport
+   ip address 10.2.1.13/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 l0w89E/+c20=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet2
+   description spine2-leaf2
+   no switchport
+   ip address 10.2.1.23/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet3
+   description spine2-leaf3
+   no switchport
+   ip address 10.2.1.33/31
+   bfd interval 500 min-rx 500 multiplier 3
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf area 0.0.0.1
+   ip ospf message-digest-key 1 md5 7 v1srhOqHBBs=
+   isis enable COD1
+   isis circuit-type level-1
+   isis network point-to-point
+   isis authentication mode md5 level-1
+   isis authentication key 7 G4eexUMXTFY= level-1
+!
+interface Ethernet4
+   shutdown
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Loopback1
+   ip address 10.0.1.102/32
+   ip ospf area 0.0.0.1
+   isis enable COD1
+!
+interface Management1
+!
+ip routing
+!
+router isis COD1 instance-id 1
+   shutdown
+   net 49.0001.1000.0000.1102.00
+   authentication mode md5
+   authentication key 7 G4eexUMXTFY=
+   !
+   address-family ipv4 unicast
+!
+router ospf 1
+   router-id 10.0.1.102
+   bfd default
+   area 0.0.0.1 default-cost 1
+   max-lsa 12000
+!
+end
+spine2#
+
+
+##########################################################################################
+
+leaf1#show bfd peers 
+VRF name: default
+-----------------
+DstAddr        MyDisc    YourDisc  Interface/Transport    Type          LastUp 
+---------- ----------- ----------- -------------------- ------- ---------------
+10.2.1.11   788910598  2903005639        Ethernet1(14)  normal  11/26/24 15:48 
+10.2.1.13  3494801786  2825020159        Ethernet2(15)  normal  11/29/24 18:19 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+
+
+leaf2#show bfd peers
+VRF name: default
+-----------------
+DstAddr        MyDisc    YourDisc  Interface/Transport    Type          LastUp 
+---------- ----------- ----------- -------------------- ------- ---------------
+10.2.1.21  4145853474  1954920242        Ethernet1(14)  normal  11/29/24 18:18 
+10.2.1.23   685188500   129489953        Ethernet2(15)  normal  11/29/24 18:18 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+
+
+leaf3#show bfd peers
+VRF name: default
+-----------------
+DstAddr        MyDisc    YourDisc  Interface/Transport    Type          LastUp 
+---------- ----------- ----------- -------------------- ------- ---------------
+10.2.1.31  1591986128  2865823785        Ethernet1(14)  normal  11/29/24 18:18 
+10.2.1.33   903852417  1433248593        Ethernet2(15)  normal  11/29/24 18:18 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+
+
+spine1#show bfd peers
+VRF name: default
+-----------------
+DstAddr        MyDisc    YourDisc  Interface/Transport    Type          LastUp 
+---------- ----------- ----------- -------------------- ------- ---------------
+10.2.1.10  2903005639   788910598        Ethernet1(14)  normal  11/26/24 15:48 
+10.2.1.20  1954920242  4145853474        Ethernet2(15)  normal  11/29/24 18:18 
+10.2.1.30  2865823785  1591986128        Ethernet3(16)  normal  11/29/24 18:18 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+
+
+spine2#show bfd peers
+VRF name: default
+-----------------
+DstAddr        MyDisc    YourDisc  Interface/Transport    Type          LastUp 
+---------- ----------- ----------- -------------------- ------- ---------------
+10.2.1.12  2825020159  3494801786        Ethernet1(13)  normal  11/29/24 18:19 
+10.2.1.22   129489953   685188500        Ethernet2(14)  normal  11/29/24 18:18 
+10.2.1.32  1433248593   903852417        Ethernet3(15)  normal  11/29/24 18:18 
+
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+         NA       No Diagnostic       Up
+
+
+
+leaf1#show bfd peers detail 
+VRF name: default
+-----------------
+Peer Addr 10.2.1.11, Intf Ethernet1, Type normal, Role active, State Up
+VRF default, LAddr 10.2.1.10, LD/RD 788910598/2903005639
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 11/26/24 15:48:26.149
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 500 ms, RxInt: 500 ms, Multiplier: 3
+Received RxInt: 500 ms, Received Multiplier: 3
+Rx Count: 5771, Rx Interval (ms) min/max/avg: 327/579/452 last: 136 ms ago
+Tx Count: 5736, Tx Interval (ms) min/max/avg: 380/523/452 last: 386 ms ago
+Detect Time: 1500 ms
+Sched Delay: 1*TxInt: 4884, 2*TxInt: 851, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: ospf
+Uptime: 3 days, 02:48:05.48
+Last packet:  Version: 1             - Diagnostic: 0         
+              State bit: Up          - Demand bit: 0         
+              Poll bit: 0            - Final bit: 0          
+              Multiplier: 3          - Length: 24            
+              My Discr.: 2903005639  - Your Discr.: 788910598
+              Min tx interval: 500   - Min rx interval: 500  
+              Min Echo interval: 500                         
+
+Peer Addr 10.2.1.13, Intf Ethernet2, Type normal, Role active, State Up
+VRF default, LAddr 10.2.1.12, LD/RD 3494801786/2825020159
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 11/29/24 18:19:49.017
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 500 ms, RxInt: 500 ms, Multiplier: 3
+Received RxInt: 500 ms, Received Multiplier: 3
+Rx Count: 2223, Rx Interval (ms) min/max/avg: 337/593/451 last: 235 ms ago
+Tx Count: 2219, Tx Interval (ms) min/max/avg: 382/514/451 last: 386 ms ago
+Detect Time: 1500 ms
+Sched Delay: 1*TxInt: 1901, 2*TxInt: 317, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: ospf
+Uptime: 16:42.62
+Last packet:  Version: 1             - Diagnostic: 0          
+              State bit: Up          - Demand bit: 0          
+              Poll bit: 0            - Final bit: 0           
+              Multiplier: 3          - Length: 24             
+              My Discr.: 2825020159  - Your Discr.: 3494801786
+              Min tx interval: 500   - Min rx interval: 500   
+              Min Echo interval: 500                          
+
+leaf1#
+
+
+spine1#show bfd peers detail 
+VRF name: default
+-----------------
+Peer Addr 10.2.1.10, Intf Ethernet1, Type normal, Role active, State Up
+VRF default, LAddr 10.2.1.11, LD/RD 2903005639/788910598
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 11/26/24 15:48:26.896
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 500 ms, RxInt: 500 ms, Multiplier: 3
+Received RxInt: 500 ms, Received Multiplier: 3
+Rx Count: 5802, Rx Interval (ms) min/max/avg: 296/598/452 last: 253 ms ago
+Tx Count: 5837, Tx Interval (ms) min/max/avg: 381/515/452 last: 28 ms ago
+Detect Time: 1500 ms
+Sched Delay: 1*TxInt: 4970, 2*TxInt: 866, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: ospf
+Uptime: 3 days, 02:48:35.18
+Last packet:  Version: 1             - Diagnostic: 0          
+              State bit: Up          - Demand bit: 0          
+              Poll bit: 0            - Final bit: 0           
+              Multiplier: 3          - Length: 24             
+              My Discr.: 788910598   - Your Discr.: 2903005639
+              Min tx interval: 500   - Min rx interval: 500   
+              Min Echo interval: 500                          
+
+Peer Addr 10.2.1.20, Intf Ethernet2, Type normal, Role active, State Up
+VRF default, LAddr 10.2.1.21, LD/RD 1954920242/4145853474
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 11/29/24 18:18:42.406
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 500 ms, RxInt: 500 ms, Multiplier: 3
+Received RxInt: 500 ms, Received Multiplier: 3
+Rx Count: 2424, Rx Interval (ms) min/max/avg: 320/579/452 last: 350 ms ago
+Tx Count: 2432, Tx Interval (ms) min/max/avg: 381/524/452 last: 444 ms ago
+Detect Time: 1500 ms
+Sched Delay: 1*TxInt: 2075, 2*TxInt: 356, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: ospf
+Uptime: 18:19.72
+Last packet:  Version: 1             - Diagnostic: 0          
+              State bit: Up          - Demand bit: 0          
+              Poll bit: 0            - Final bit: 0           
+              Multiplier: 3          - Length: 24             
+              My Discr.: 4145853474  - Your Discr.: 1954920242
+              Min tx interval: 500   - Min rx interval: 500   
+              Min Echo interval: 500                          
+
+Peer Addr 10.2.1.30, Intf Ethernet3, Type normal, Role active, State Up
+VRF default, LAddr 10.2.1.31, LD/RD 2865823785/1591986128
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 11/29/24 18:18:21.607
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 500 ms, RxInt: 500 ms, Multiplier: 3
+Received RxInt: 500 ms, Received Multiplier: 3
+Rx Count: 2484, Rx Interval (ms) min/max/avg: 44/576/450 last: 372 ms ago
+Tx Count: 2481, Tx Interval (ms) min/max/avg: 379/514/451 last: 252 ms ago
+Detect Time: 1500 ms
+Sched Delay: 1*TxInt: 2123, 2*TxInt: 357, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: ospf
+Uptime: 18:40.52
+Last packet:  Version: 1             - Diagnostic: 0          
+              State bit: Up          - Demand bit: 0          
+              Poll bit: 0            - Final bit: 0           
+              Multiplier: 3          - Length: 24             
+              My Discr.: 1591986128  - Your Discr.: 2865823785
+              Min tx interval: 500   - Min rx interval: 500   
+              Min Echo interval: 500                          
+
+spine1#
+
+
+###################################################################################################################
+
+
+
+leaf1#show ip ospf neighbor 
+Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface
+10.0.1.101      1        default  0   FULL                   00:00:31    10.2.1.11       Ethernet1
+10.0.1.102      1        default  0   FULL                   00:00:32    10.2.1.13       Ethernet2
+
+leaf1#show ip route 
+ C        10.0.1.1/32 is directly connected, Loopback1
+ O        10.0.1.2/32 [110/30] via 10.2.1.11, Ethernet1
+                               via 10.2.1.13, Ethernet2
+ O        10.0.1.3/32 [110/30] via 10.2.1.11, Ethernet1
+                               via 10.2.1.13, Ethernet2
+ O        10.0.1.101/32 [110/20] via 10.2.1.11, Ethernet1
+ O        10.0.1.102/32 [110/20] via 10.2.1.13, Ethernet2
+ C        10.2.1.10/31 is directly connected, Ethernet1
+ C        10.2.1.12/31 is directly connected, Ethernet2
+ O        10.2.1.20/31 [110/20] via 10.2.1.11, Ethernet1
+ O        10.2.1.22/31 [110/20] via 10.2.1.13, Ethernet2
+ O        10.2.1.30/31 [110/20] via 10.2.1.11, Ethernet1
+ O        10.2.1.32/31 [110/20] via 10.2.1.13, Ethernet2
+leaf1#
+
+
+leaf2#show ip ospf neighbor
+Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface
+10.0.1.101      1        default  0   FULL                   00:00:32    10.2.1.21       Ethernet1
+10.0.1.102      1        default  0   FULL                   00:00:30    10.2.1.23       Ethernet2
+
+leaf2#show ip route
+ O        10.0.1.1/32 [110/30] via 10.2.1.21, Ethernet1
+                               via 10.2.1.23, Ethernet2
+ C        10.0.1.2/32 is directly connected, Loopback1
+ O        10.0.1.3/32 [110/30] via 10.2.1.21, Ethernet1
+                               via 10.2.1.23, Ethernet2
+ O        10.0.1.101/32 [110/20] via 10.2.1.21, Ethernet1
+ O        10.0.1.102/32 [110/20] via 10.2.1.23, Ethernet2
+ O        10.2.1.10/31 [110/20] via 10.2.1.21, Ethernet1
+ O        10.2.1.12/31 [110/20] via 10.2.1.23, Ethernet2
+ C        10.2.1.20/31 is directly connected, Ethernet1
+ C        10.2.1.22/31 is directly connected, Ethernet2
+ O        10.2.1.30/31 [110/20] via 10.2.1.21, Ethernet1
+ O        10.2.1.32/31 [110/20] via 10.2.1.23, Ethernet2
+leaf2#
+
+
+
+leaf3#show ip ospf neighbor
+Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface
+10.0.1.102      1        default  0   FULL                   00:00:35    10.2.1.33       Ethernet2
+10.0.1.101      1        default  0   FULL                   00:00:32    10.2.1.31       Ethernet1
+
+leaf3#show ip route
+ O        10.0.1.1/32 [110/30] via 10.2.1.31, Ethernet1
+                               via 10.2.1.33, Ethernet2
+ O        10.0.1.2/32 [110/30] via 10.2.1.31, Ethernet1
+                               via 10.2.1.33, Ethernet2
+ C        10.0.1.3/32 is directly connected, Loopback1
+ O        10.0.1.101/32 [110/20] via 10.2.1.31, Ethernet1
+ O        10.0.1.102/32 [110/20] via 10.2.1.33, Ethernet2
+ O        10.2.1.10/31 [110/20] via 10.2.1.31, Ethernet1
+ O        10.2.1.12/31 [110/20] via 10.2.1.33, Ethernet2
+ O        10.2.1.20/31 [110/20] via 10.2.1.31, Ethernet1
+ O        10.2.1.22/31 [110/20] via 10.2.1.33, Ethernet2
+ C        10.2.1.30/31 is directly connected, Ethernet1
+ C        10.2.1.32/31 is directly connected, Ethernet2
+leaf3#
+
+
+spine1#show ip ospf neighbor
+Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface
+10.0.1.1        1        default  0   FULL                   00:00:37    10.2.1.10       Ethernet1
+10.0.1.2        1        default  0   FULL                   00:00:35    10.2.1.20       Ethernet2
+10.0.1.3        1        default  0   FULL                   00:00:30    10.2.1.30       Ethernet3
+
+spine1#show ip route
+ O        10.0.1.1/32 [110/20] via 10.2.1.10, Ethernet1
+ O        10.0.1.2/32 [110/20] via 10.2.1.20, Ethernet2
+ O        10.0.1.3/32 [110/20] via 10.2.1.30, Ethernet3
+ C        10.0.1.101/32 is directly connected, Loopback1
+ O        10.0.1.102/32 [110/30] via 10.2.1.10, Ethernet1
+                                 via 10.2.1.20, Ethernet2
+                                 via 10.2.1.30, Ethernet3
+ C        10.2.1.10/31 is directly connected, Ethernet1
+ O        10.2.1.12/31 [110/20] via 10.2.1.10, Ethernet1
+ C        10.2.1.20/31 is directly connected, Ethernet2
+ O        10.2.1.22/31 [110/20] via 10.2.1.20, Ethernet2
+ C        10.2.1.30/31 is directly connected, Ethernet3
+ O        10.2.1.32/31 [110/20] via 10.2.1.30, Ethernet3
+spine1#
+
+
+spine2#show ip ospf neighbor
+Neighbor ID     Instance VRF      Pri State                  Dead Time   Address         Interface
+10.0.1.1        1        default  0   FULL                   00:00:35    10.2.1.12       Ethernet1
+10.0.1.2        1        default  0   FULL                   00:00:31    10.2.1.22       Ethernet2
+10.0.1.3        1        default  0   FULL                   00:00:32    10.2.1.32       Ethernet3
+
+spine2#show ip route
+ O        10.0.1.1/32 [110/20] via 10.2.1.12, Ethernet1
+ O        10.0.1.2/32 [110/20] via 10.2.1.22, Ethernet2
+ O        10.0.1.3/32 [110/20] via 10.2.1.32, Ethernet3
+ O        10.0.1.101/32 [110/30] via 10.2.1.12, Ethernet1
+                                 via 10.2.1.22, Ethernet2
+                                 via 10.2.1.32, Ethernet3
+ C        10.0.1.102/32 is directly connected, Loopback1
+ O        10.2.1.10/31 [110/20] via 10.2.1.12, Ethernet1
+ C        10.2.1.12/31 is directly connected, Ethernet1
+ O        10.2.1.20/31 [110/20] via 10.2.1.22, Ethernet2
+ C        10.2.1.22/31 is directly connected, Ethernet2
+ O        10.2.1.30/31 [110/20] via 10.2.1.32, Ethernet3
+ C        10.2.1.32/31 is directly connected, Ethernet3
+spine2#
+
+
+
+leaf1#ping 10.0.1.1 source 10.0.1.1
+PING 10.0.1.1 (10.0.1.1) from 10.0.1.1 : 72(100) bytes of data.
+80 bytes from 10.0.1.1: icmp_seq=1 ttl=64 time=0.772 ms
+80 bytes from 10.0.1.1: icmp_seq=2 ttl=64 time=0.158 ms
+80 bytes from 10.0.1.1: icmp_seq=3 ttl=64 time=0.171 ms
+80 bytes from 10.0.1.1: icmp_seq=4 ttl=64 time=0.159 ms
+80 bytes from 10.0.1.1: icmp_seq=5 ttl=64 time=0.156 ms
+
+--- 10.0.1.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 12ms
+rtt min/avg/max/mdev = 0.156/0.283/0.772/0.244 ms, ipg/ewma 3.135/0.519 ms
+leaf1#ping 10.0.1.2 source 10.0.1.1 
+PING 10.0.1.2 (10.0.1.2) from 10.0.1.1 : 72(100) bytes of data.
+80 bytes from 10.0.1.2: icmp_seq=1 ttl=63 time=35.3 ms
+80 bytes from 10.0.1.2: icmp_seq=2 ttl=63 time=41.3 ms
+80 bytes from 10.0.1.2: icmp_seq=3 ttl=63 time=36.1 ms
+80 bytes from 10.0.1.2: icmp_seq=4 ttl=63 time=19.6 ms
+80 bytes from 10.0.1.2: icmp_seq=5 ttl=63 time=28.3 ms
+
+--- 10.0.1.2 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 96ms
+rtt min/avg/max/mdev = 19.658/32.139/41.303/7.485 ms, pipe 3, ipg/ewma 24.233/33.301 ms
+leaf1#ping 10.0.1.3 source 10.0.1.1 
+PING 10.0.1.3 (10.0.1.3) from 10.0.1.1 : 72(100) bytes of data.
+80 bytes from 10.0.1.3: icmp_seq=1 ttl=63 time=26.6 ms
+80 bytes from 10.0.1.3: icmp_seq=2 ttl=63 time=21.4 ms
+80 bytes from 10.0.1.3: icmp_seq=3 ttl=63 time=16.4 ms
+80 bytes from 10.0.1.3: icmp_seq=4 ttl=63 time=20.3 ms
+80 bytes from 10.0.1.3: icmp_seq=5 ttl=63 time=19.9 ms
+
+--- 10.0.1.3 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 89ms
+rtt min/avg/max/mdev = 16.497/20.971/26.658/3.289 ms, pipe 2, ipg/ewma 22.463/23.715 ms
+leaf1#ping 10.0.1.101 source 10.0.1.1 
+PING 10.0.1.101 (10.0.1.101) from 10.0.1.1 : 72(100) bytes of data.
+80 bytes from 10.0.1.101: icmp_seq=1 ttl=64 time=8.59 ms
+80 bytes from 10.0.1.101: icmp_seq=2 ttl=64 time=15.8 ms
+80 bytes from 10.0.1.101: icmp_seq=3 ttl=64 time=9.21 ms
+80 bytes from 10.0.1.101: icmp_seq=4 ttl=64 time=10.6 ms
+80 bytes from 10.0.1.101: icmp_seq=5 ttl=64 time=7.73 ms
+
+--- 10.0.1.101 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 55ms
+rtt min/avg/max/mdev = 7.731/10.410/15.853/2.886 ms, ipg/ewma 13.893/9.377 ms
+leaf1#ping 10.0.1.102 source 10.0.1.1 
+PING 10.0.1.102 (10.0.1.102) from 10.0.1.1 : 72(100) bytes of data.
+80 bytes from 10.0.1.102: icmp_seq=1 ttl=64 time=8.83 ms
+80 bytes from 10.0.1.102: icmp_seq=2 ttl=64 time=12.2 ms
+80 bytes from 10.0.1.102: icmp_seq=3 ttl=64 time=14.4 ms
+80 bytes from 10.0.1.102: icmp_seq=4 ttl=64 time=7.85 ms
+80 bytes from 10.0.1.102: icmp_seq=5 ttl=64 time=7.87 ms
+
+--- 10.0.1.102 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 48ms
+rtt min/avg/max/mdev = 7.854/10.248/14.429/2.639 ms, pipe 2, ipg/ewma 12.112/9.430 ms
+leaf1#
+
+
+
+spine2#ping 10.0.1.1 source 10.0.1.102
+PING 10.0.1.1 (10.0.1.1) from 10.0.1.102 : 72(100) bytes of data.
+80 bytes from 10.0.1.1: icmp_seq=1 ttl=64 time=9.36 ms
+80 bytes from 10.0.1.1: icmp_seq=2 ttl=64 time=7.36 ms
+80 bytes from 10.0.1.1: icmp_seq=3 ttl=64 time=7.68 ms
+80 bytes from 10.0.1.1: icmp_seq=4 ttl=64 time=10.4 ms
+80 bytes from 10.0.1.1: icmp_seq=5 ttl=64 time=7.88 ms
+
+--- 10.0.1.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 47ms
+rtt min/avg/max/mdev = 7.363/8.541/10.416/1.167 ms, ipg/ewma 11.962/8.965 ms
+spine2#ping 10.0.1.2 source 10.0.1.102 
+PING 10.0.1.2 (10.0.1.2) from 10.0.1.102 : 72(100) bytes of data.
+80 bytes from 10.0.1.2: icmp_seq=1 ttl=64 time=24.8 ms
+80 bytes from 10.0.1.2: icmp_seq=2 ttl=64 time=23.0 ms
+80 bytes from 10.0.1.2: icmp_seq=3 ttl=64 time=28.2 ms
+80 bytes from 10.0.1.2: icmp_seq=4 ttl=64 time=17.9 ms
+
+--- 10.0.1.2 ping statistics ---
+5 packets transmitted, 4 received, 20% packet loss, time 79ms
+rtt min/avg/max/mdev = 17.927/23.517/28.238/3.736 ms, pipe 3, ipg/ewma 19.819/24.210 ms
+spine2#ping 10.0.1.3 source 10.0.1.102 
+PING 10.0.1.3 (10.0.1.3) from 10.0.1.102 : 72(100) bytes of data.
+80 bytes from 10.0.1.3: icmp_seq=1 ttl=64 time=8.07 ms
+80 bytes from 10.0.1.3: icmp_seq=2 ttl=64 time=7.10 ms
+80 bytes from 10.0.1.3: icmp_seq=3 ttl=64 time=7.93 ms
+80 bytes from 10.0.1.3: icmp_seq=4 ttl=64 time=14.9 ms
+80 bytes from 10.0.1.3: icmp_seq=5 ttl=64 time=9.55 ms
+
+--- 10.0.1.3 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 42ms
+rtt min/avg/max/mdev = 7.103/9.531/14.991/2.842 ms, pipe 2, ipg/ewma 10.534/8.920 ms
+spine2#ping 10.0.1.101 source 10.0.1.102 
+PING 10.0.1.101 (10.0.1.101) from 10.0.1.102 : 72(100) bytes of data.
+80 bytes from 10.0.1.101: icmp_seq=1 ttl=63 time=22.0 ms
+80 bytes from 10.0.1.101: icmp_seq=2 ttl=63 time=20.6 ms
+80 bytes from 10.0.1.101: icmp_seq=3 ttl=63 time=15.9 ms
+80 bytes from 10.0.1.101: icmp_seq=4 ttl=63 time=18.2 ms
+80 bytes from 10.0.1.101: icmp_seq=5 ttl=63 time=24.3 ms
+
+--- 10.0.1.101 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 85ms
+rtt min/avg/max/mdev = 15.917/20.231/24.330/2.932 ms, pipe 2, ipg/ewma 21.380/21.221 ms
+spine2#ping 10.0.1.102 source 10.0.1.102 
+PING 10.0.1.102 (10.0.1.102) from 10.0.1.102 : 72(100) bytes of data.
+80 bytes from 10.0.1.102: icmp_seq=1 ttl=64 time=0.321 ms
+80 bytes from 10.0.1.102: icmp_seq=2 ttl=64 time=0.157 ms
+80 bytes from 10.0.1.102: icmp_seq=3 ttl=64 time=0.405 ms
+80 bytes from 10.0.1.102: icmp_seq=4 ttl=64 time=0.288 ms
+80 bytes from 10.0.1.102: icmp_seq=5 ttl=64 time=0.159 ms
+
+--- 10.0.1.102 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 2ms
+rtt min/avg/max/mdev = 0.157/0.266/0.405/0.096 ms, ipg/ewma 0.574/0.291 ms
+spine2#
+
