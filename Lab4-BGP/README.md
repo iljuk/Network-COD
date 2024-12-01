@@ -8,9 +8,8 @@ show_bgp_bfd_route.txt - просмотр состояний BGP, BFD, ip мар
 shema-seti_in_emergency_mode.png - Схема стеи при отказе 2 линков.  
 show_in_emergency_mode.txt - Наличие ip связности при отказе линков через RR Leaf2.  
 
-```
-https://github.com/iljuk/Network-COD/blob/main/Lab4-BGP/shema-seti.png?raw=true
-```
+<img width="536" alt="shema-seti" src="https://github.com/user-attachments/assets/232511a1-779a-4d54-becb-21604e5f5157">
+
 
 ```
 ################################################################################
