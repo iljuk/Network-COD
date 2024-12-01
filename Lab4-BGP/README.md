@@ -8,7 +8,7 @@ show_bgp_bfd_route.txt - просмотр состояний BGP, BFD, ip мар
 shema-seti_in_emergency_mode.png - Схема стеи при отказе 2 линков.  
 show_in_emergency_mode.txt - Наличие ip связности при отказе линков через RR Leaf2.  
 
-'''
+```
 ################################################################################
 
 Configuration all switches.
@@ -589,6 +589,5 @@ router ospf 1
 end
 spine2#
 
-
-'''
+```
 
