@@ -9,7 +9,6 @@ shema-seti_in_emergency_mode.png - Схема стеи при отказе 2 л�
 show_in_emergency_mode.txt - Наличие ip связности при отказе линков через RR Leaf2.  
 
 ```
-<img width="536" alt="shema-seti" src="https://github.com/user-attachments/assets/47dd9c7a-6f5c-474c-a817-4840fe4530d3">
 
 ```
 
