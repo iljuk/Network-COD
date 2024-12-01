@@ -1296,6 +1296,15 @@ leaf3(config-if-Et1)#show ip route
 leaf3(config-if-Et1)#
 
 
+leaf1(config-if-Et2)#traceroute 10.0.1.3 source 10.0.1.1
+traceroute to 10.0.1.3 (10.0.1.3), 30 hops max, 60 byte packets
+ 1  10.2.1.11 (10.2.1.11)  54.255 ms  56.272 ms  65.269 ms
+ 2  10.2.1.20 (10.2.1.20)  100.981 ms  116.957 ms  122.183 ms
+ 3  10.2.1.23 (10.2.1.23)  177.751 ms  191.762 ms  208.631 ms
+ 4  10.0.1.3 (10.0.1.3)  242.505 ms  256.959 ms  398.530 ms
+leaf1(config-if-Et2)#
+
+
 leaf2#show ip bgp summary
 BGP summary information for VRF default
 Router identifier 10.0.1.2, local AS number 65001
@@ -1314,4 +1323,74 @@ leaf2#show ip route
  C        10.2.1.22/31 is directly connected, Ethernet2
  B I      10.2.1.32/31 [200/0] via 10.2.1.23, Ethernet2
 leaf2#
+
+
+
+leaf1(config-if-Et2)#ping 10.0.1.1
+PING 10.0.1.1 (10.0.1.1) 72(100) bytes of data.
+80 bytes from 10.0.1.1: icmp_seq=1 ttl=64 time=0.726 ms
+80 bytes from 10.0.1.1: icmp_seq=2 ttl=64 time=0.159 ms
+80 bytes from 10.0.1.1: icmp_seq=3 ttl=64 time=0.155 ms
+80 bytes from 10.0.1.1: icmp_seq=4 ttl=64 time=0.193 ms
+80 bytes from 10.0.1.1: icmp_seq=5 ttl=64 time=0.169 ms
+
+--- 10.0.1.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 19ms
+rtt min/avg/max/mdev = 0.155/0.280/0.726/0.223 ms, ipg/ewma 4.936/0.496 ms
+leaf1(config-if-Et2)#ping 10.0.1.2
+PING 10.0.1.2 (10.0.1.2) 72(100) bytes of data.
+80 bytes from 10.0.1.2: icmp_seq=1 ttl=63 time=30.5 ms
+80 bytes from 10.0.1.2: icmp_seq=2 ttl=63 time=27.8 ms
+80 bytes from 10.0.1.2: icmp_seq=3 ttl=63 time=23.9 ms
+80 bytes from 10.0.1.2: icmp_seq=4 ttl=63 time=18.2 ms
+80 bytes from 10.0.1.2: icmp_seq=5 ttl=63 time=22.5 ms
+
+--- 10.0.1.2 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 84ms
+rtt min/avg/max/mdev = 18.271/24.615/30.525/4.257 ms, pipe 3, ipg/ewma 21.104/27.327 ms
+leaf1(config-if-Et2)#ping 10.0.1.3
+PING 10.0.1.3 (10.0.1.3) 72(100) bytes of data.
+80 bytes from 10.0.1.3: icmp_seq=1 ttl=61 time=103 ms
+80 bytes from 10.0.1.3: icmp_seq=2 ttl=61 time=99.8 ms
+80 bytes from 10.0.1.3: icmp_seq=3 ttl=61 time=147 ms
+80 bytes from 10.0.1.3: icmp_seq=4 ttl=61 time=145 ms
+80 bytes from 10.0.1.3: icmp_seq=5 ttl=61 time=137 ms
+
+--- 10.0.1.3 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 61ms
+rtt min/avg/max/mdev = 99.891/126.540/147.128/20.646 ms, pipe 5, ipg/ewma 15.497/116.054 ms
+leaf1(config-if-Et2)#ping 10.0.1.4
+connect: Network is unreachable
+leaf1(config-if-Et2)#ping 10.0.1.101
+PING 10.0.1.101 (10.0.1.101) 72(100) bytes of data.
+80 bytes from 10.0.1.101: icmp_seq=1 ttl=64 time=25.4 ms
+80 bytes from 10.0.1.101: icmp_seq=2 ttl=64 time=18.4 ms
+80 bytes from 10.0.1.101: icmp_seq=3 ttl=64 time=16.1 ms
+80 bytes from 10.0.1.101: icmp_seq=4 ttl=64 time=8.65 ms
+80 bytes from 10.0.1.101: icmp_seq=5 ttl=64 time=13.8 ms
+
+--- 10.0.1.101 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 86ms
+rtt min/avg/max/mdev = 8.651/16.506/25.442/5.527 ms, pipe 2, ipg/ewma 21.551/20.680 ms
+leaf1(config-if-Et2)#ping 10.0.1.102
+PING 10.0.1.102 (10.0.1.102) 72(100) bytes of data.
+80 bytes from 10.0.1.102: icmp_seq=1 ttl=62 time=48.8 ms
+80 bytes from 10.0.1.102: icmp_seq=2 ttl=62 time=51.4 ms
+80 bytes from 10.0.1.102: icmp_seq=3 ttl=62 time=56.0 ms
+80 bytes from 10.0.1.102: icmp_seq=4 ttl=62 time=67.2 ms
+80 bytes from 10.0.1.102: icmp_seq=5 ttl=62 time=50.1 ms
+
+--- 10.0.1.102 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 109ms
+rtt min/avg/max/mdev = 48.815/54.737/67.278/6.734 ms, pipe 4, ipg/ewma 27.283/51.907 ms
+leaf1(config-if-Et2)#
+
+
+leaf1(config-if-Et2)#traceroute 10.0.1.3 source 10.0.1.1
+traceroute to 10.0.1.3 (10.0.1.3), 30 hops max, 60 byte packets
+ 1  10.2.1.11 (10.2.1.11)  54.255 ms  56.272 ms  65.269 ms
+ 2  10.2.1.20 (10.2.1.20)  100.981 ms  116.957 ms  122.183 ms
+ 3  10.2.1.23 (10.2.1.23)  177.751 ms  191.762 ms  208.631 ms
+ 4  10.0.1.3 (10.0.1.3)  242.505 ms  256.959 ms  398.530 ms
+leaf1(config-if-Et2)#
 ```
