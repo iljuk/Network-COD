@@ -1,5 +1,5 @@
 The network operates on iBGP, but is ready for OSPF or IS-IS protocols.   
-Схема модифицировна для исключения Split Brain: RR только на Spine коммутаторах, для максимальной надежности добавлена перемычка между обоими Spine.   
+Схема модифицировна для исключения Split Brain: RR только на Spine коммутаторах, для максимальной надежности добавлена перемычка между обоими Spine, т.к. надежность сети с моем варианте на 1 месте.   
 Files:   
 shema-seti_max-reliability.png - Схема сети.   
 ip-plan_BGP_(+OSPF+ISIS)-max-reliability.txt - общий IP план для BGP и протколов OSPF и IS-IS.   
